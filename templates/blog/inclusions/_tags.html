@@ -7,7 +7,7 @@
             <a href="{% url 'blog:tag' tag.id %}">{{ tag.name }} <span class="post-count">({{ tag.num_posts }})</span></a>
         </li>
         {% empty %}
-          暂无标签！
+          &nbsp;&nbsp;暂无标签！
         {% endfor %}
     </ul>
 </div>
