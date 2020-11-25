@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 faker = "*"
+fabric = "*"
 
 [packages]
 django = "==2.2.17"

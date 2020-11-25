@@ -104,7 +104,7 @@ venv.bak/
 # mypy
 *.sqlite3
 media/
-_credentials.py
+scripts/_credentials.py
 .production
 
 # Pycharm .idea folder, see following link to know which files should be ignored:
