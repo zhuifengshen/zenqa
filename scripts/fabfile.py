@@ -1,6 +1,6 @@
-from fabric import task
+from fabric import Connection
 from invoke import Responder
-from _credentials import github_username, github_password
+from _credentials import github_username, github_password, server_ip, server_password
 
 
 def _get_github_auth_responders():
@@ -18,16 +18,16 @@ def _get_github_auth_responders():
     return [username_responder, password_responder]
 
 
-@task()
-def deploy(c):
+if __name__ == '__main__':
     supervisor_conf_path = './'
     supervisor_program_name = 'zenqa'
-
     project_root_path = '~/apps/zenqa/'
 
+    c = Connection(server_ip, connect_kwargs={"password": server_password})
+    
     # 先停止应用
-    with c.cd(supervisor_conf_path):
-        cmd = 'supervisorctl stop {}'.format(supervisor_program_name)
+    with c.cd(project_root_path):
+        cmd = 'pipenv run supervisorctl stop {}'.format(supervisor_program_name)
         c.run(cmd)
 
     # 进入项目根目录，从 Git 拉取最新代码
@@ -40,9 +40,9 @@ def deploy(c):
     with c.cd(project_root_path):
         c.run('pipenv install --deploy --ignore-pipfile')
         c.run('pipenv run python manage.py migrate')
-        c.run('pipenv run python collectstatic --noinput')
+        c.run('pipenv run python manage.py collectstatic --noinput')
 
     # 重新启动应用
-    with c.cd(supervisor_conf_path):
-        cmd = 'supervisorctl start {}'.format(supervisor_program_name)
+    with c.cd(project_root_path):      
+        cmd = 'pipenv run supervisorctl start {}'.format(supervisor_program_name)
         c.run(cmd)
