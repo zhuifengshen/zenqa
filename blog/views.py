@@ -11,6 +11,7 @@ from django.contrib import messages
 from django.db.models import Q
 
 from .models import Post, Category, Tag
+from pure_pagination import PaginationMixin
 
 
 """
@@ -64,10 +65,11 @@ def archive(request, year, month):
   return render(request, 'blog/index.html', context={'post_list': post_list})
 
 
-class IndexView(ListView):
+class IndexView(PaginationMixin, ListView):
   model = Post
   template_name = 'blog/index.html'
   context_object_name = 'post_list'
+  paginate_by = 10  # 指定每页包含文章数
 
 
 # class CategoryView(ListView):
@@ -102,21 +104,19 @@ class PostDetailView(DetailView):
     self.object.increase_views()
     return response
   
-  def get_object(self, queryset=None):
-    """文章内容处理"""
-    post = super().get_object(queryset=None)
-    md = markdown.Markdown(extensions=[
-      'markdown.extensions.extra',
-      'markdown.extensions.codehilite',
-      # 'markdown.extensions.toc',
-      TocExtension(slugify=slugify),
-    ])
-    post.body = md.convert(post.body)
-
-    m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
-    post.toc = m.group(1) if m is not None else ''
-    
-    return post
+  # def get_object(self, queryset=None):
+  #   """文章内容处理"""
+  #   post = super().get_object(queryset=None)
+  #   md = markdown.Markdown(extensions=[
+  #     'markdown.extensions.extra',
+  #     'markdown.extensions.codehilite',
+  #     # 'markdown.extensions.toc',
+  #     TocExtension(slugify=slugify),
+  #   ])
+  #   post.body = md.convert(post.body)
+  #   m = re.search(r'<div class="toc">\s*<ul>(.*)</ul>\s*</div>', md.toc, re.S)
+  #   post.toc = m.group(1) if m is not None else ''    
+  #   return post
 
   
 def search(request):

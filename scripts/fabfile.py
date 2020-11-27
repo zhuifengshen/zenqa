@@ -19,7 +19,6 @@ def _get_github_auth_responders():
 
 
 if __name__ == '__main__':
-    supervisor_conf_path = './'
     supervisor_program_name = 'zenqa'
     project_root_path = '~/apps/zenqa/'
 
@@ -27,22 +26,28 @@ if __name__ == '__main__':
     
     # 先停止应用
     with c.cd(project_root_path):
-        cmd = 'pipenv run supervisorctl stop {}'.format(supervisor_program_name)
+        print('停止应用...')
+        # 注意：如果启动supervisorctl时，未指定配置文件，会使用默认的http方式连接supervisord，
+        # 但我们一般使用的是socket连接，所以报错：http://localhost:9001 refused connection
+        cmd = 'pipenv run supervisorctl -c scripts/supervisord.conf stop {}'.format(supervisor_program_name)
         c.run(cmd)
 
     # 进入项目根目录，从 Git 拉取最新代码
     with c.cd(project_root_path):
+        print('拉取最新代码...')
         cmd = 'git pull'
         responders = _get_github_auth_responders()
         c.run(cmd, watchers=responders)
 
     # 安装依赖，迁移数据库，收集静态文件
     with c.cd(project_root_path):
+        print('更新工程配置...')
         c.run('pipenv install --deploy --ignore-pipfile')
         c.run('pipenv run python manage.py migrate')
         c.run('pipenv run python manage.py collectstatic --noinput')
 
     # 重新启动应用
     with c.cd(project_root_path):      
-        cmd = 'pipenv run supervisorctl start {}'.format(supervisor_program_name)
+        print('启动应用...')
+        cmd = 'pipenv run supervisorctl -c scripts/supervisord.conf start {}'.format(supervisor_program_name)
         c.run(cmd)

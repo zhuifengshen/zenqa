@@ -27,24 +27,19 @@
       <div class="no-post">暂时还没有发布的文章！</div>
     {% endfor %}
 
-    <!-- 简单分页效果
-    <div class="pagination-simple">
-        <a href="#">上一页</a>
-        <span class="current">第 6 页 / 共 11 页</span>
-        <a href="#">下一页</a>
-    </div>
-    -->
-    <div class="pagination">
-        <ul>
-            <li><a href="">1</a></li>
-            <li><a href="">...</a></li>
-            <li><a href="">4</a></li>
-            <li><a href="">5</a></li>
-            <li class="current"><a href="">6</a></li>
-            <li><a href="">7</a></li>
-            <li><a href="">8</a></li>
-            <li><a href="">...</a></li>
-            <li><a href="">11</a></li>
-        </ul>
-    </div>
+    <!-- 分页区域 -->
+    {% if is_paginated %}
+    <!-- 简单分页效果 -->
+    {% comment %} <div class="pagination-simple">
+      {% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}">< 上一页  </a>{% endif %}        
+      <span class="current">第 {{ page_obj.number }} 页 / 共 {{ paginator.num_pages }} 页</span>    
+      {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}">  下一页 ></a>{% endif %}
+    </div> {% endcomment %}
+    
+    <!-- 分页插件 -->
+      {{ page_obj.render }}
+      
+    {% endif %}
+
+
 {% endblock main %}

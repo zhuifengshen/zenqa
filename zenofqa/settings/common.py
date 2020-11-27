@@ -23,8 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # Application definition
 
 INSTALLED_APPS = [
-    'blog.apps.BlogConfig',
-    'comments.apps.CommentsConfig',
+    'pure_pagination',  # 分页
+    'blog.apps.BlogConfig',  # 博客
+    'comments.apps.CommentsConfig',  # 评论
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +33,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# django-pure-pagination 分页设置，分页模板预定义的路径为 pure_pagination/pagination.html
+PAGINATION_SETTINGS = {
+    'PAGE_RANGE_DISPLAYED': 3, # 分页条当前页前后应该显示的总页数（两边均匀分布，因此要设置为偶数），
+    'MARGIN_PAGES_DISPLAYED': 1, # 分页条开头和结尾显示的页数
+    'SHOW_FIRST_PAGE_WHEN_INVALID': True, # 当请求了不存在页，显示第一页
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
