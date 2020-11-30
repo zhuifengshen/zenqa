@@ -55,14 +55,12 @@ class Post(models.Model):
 
   def save(self, *args, **kwargs):
     self.modified_time = timezone.now()
-
     if not self.excerpt:
       md = markdown.Markdown(extensions=[
         'markdown.extensions.extra',
         'markdown.extensions.codehilite',
       ])
       self.excerpt = strip_tags(md.convert(self.body))[:54]
-
     super().save(*args, **kwargs)
   
   def get_absolute_url(self):

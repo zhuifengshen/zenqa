@@ -1,0 +1,14 @@
+[run]
+branch = True
+source = .
+omit = 
+  _credentials.py
+  manage.py
+  zenofqa/settings/*
+  zenofqa/wsgi.py
+  scripts/*
+  */migrations/*
+
+[report]
+show_missing = True
+skip_covered = True
