@@ -129,3 +129,7 @@ def search(request):
   
   post_list = Post.objects.filter(Q(title__icontains=q) | Q(body__icontains=q))  # Q对象用于包装查询表达式，提供复杂的查询逻辑
   return render(request, 'blog/index.html', {'post_list': post_list})
+
+
+def about(request):
+  return render(request, 'blog/about.html')
