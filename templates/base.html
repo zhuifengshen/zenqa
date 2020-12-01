@@ -73,10 +73,10 @@
 
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">Home</a></li>
-                            <li class="cl-effect-11"><a href="full-width.html" data-hover="博客">Blog</a></li>
-                            <li class="cl-effect-11"><a href="about.html" data-hover="关于">About</a></li>
-                            <li class="cl-effect-11"><a href="contact.html" data-hover="联系">Contact</a></li>
+                            <li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="Home">Home</a></li>
+                            {% comment %} <li class="cl-effect-11"><a href="full-width.html" data-hover="Blog">Blog</a></li> {% endcomment %}
+                            <li class="cl-effect-11"><a href="{% url 'blog:about' %}" data-hover="About">About</a></li>
+                            {% comment %} <li class="cl-effect-11"><a href="contact.html" data-hover="Contact">Contact</a></li> {% endcomment %}
                         </ul>
                     </div><!-- /.navbar-collapse -->
                 </nav>
@@ -109,6 +109,7 @@
 <div class="content-body">
     <div class="container">
         <div class="row">
+        {% block content %}
             <main class="col-md-8">
                 {% block main %}
                 {% endblock main %}
@@ -125,6 +126,7 @@
                     <a href="{% url 'rss' %}"><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>
             </aside>
+        {% endblock content %}
         </div>
     </div>
 </div>
@@ -132,7 +134,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p class="copyright">Copyright &copy Devin Blog 2020</p>
+                <p class="copyright">Copyright &copy <a href="https://github.com/zhuifengshen">QA之禅</a> 2021</p>
             </div>
         </div>
     </div>
@@ -144,9 +146,9 @@
     <nav>
         <ul>
             <li><a href="{% url 'blog:index' %}">Home</a></li>
-            <li><a href="full-width.html">Blog</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
+            {% comment %} <li><a href="full-width.html">Blog</a></li> {% endcomment %}
+            <li><a href="{% url 'blog:about' %}">About</a></li>
+            {% comment %} <li><a href="contact.html">Contact</a></li> {% endcomment %}
         </ul>
     </nav>
 </div>
