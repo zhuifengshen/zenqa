@@ -7,6 +7,9 @@ from .models import Comment
 from .forms import CommentForm
 from blog.models import Post
 
+from rest_framework import mixins, viewsets
+from .serializers import CommentSerializer
+
 
 # Create your views here.
 @require_POST
@@ -27,3 +30,11 @@ def comment(request, post_pk):
   }
   messages.add_message(request, messages.ERROR, '评论发表失败！请修改表单中的错误后重新提交。', extra_tags='danger')  
   return render(request, 'comments/preview.html', context=context)
+
+
+class CommentViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
+  serializer_class = CommentSerializer
+
+  def get_queryset(self):
+      return Comment.objects.all()
+  
