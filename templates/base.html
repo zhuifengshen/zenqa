@@ -7,7 +7,7 @@
     <!-- meta -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="https://oss.tool.lu/cache/202012/01/1820174foh2vo646f0q056.png.icon.ico">
+    <link rel="shortcut icon" href="{% static 'blog/img/favicon.ico' %}">
     <!-- css -->
     <link rel="stylesheet" href="{% static 'blog/css/pace.css' %}">
     <link rel="stylesheet" href="{% static 'blog/css/custom.css' %}">
@@ -61,7 +61,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-5 col-xs-8">
                 <div class="logo">
-                    <h1><a href="{% url 'blog:index' %}">Zen of QA</a></h1>
+                    <h1><a href="{% url 'blog:index' %}">Zen of QA | 学习记录</a></h1>
                 </div>
             </div><!-- col-md-4 -->
             <div class="col-md-8 col-sm-7 col-xs-4">
@@ -135,7 +135,10 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p class="copyright">Copyright &copy <a href="https://github.com/zhuifengshen">QA之禅</a> 2021</p>
+                <p class="copyright">Copyright &copy 
+                  <a href="https://github.com/zhuifengshen">QA之禅</a> 2020
+                  <a href="https://beian.miit.gov.cn/">粤ICP备2020133383号</a>
+                </p>
             </div>
         </div>
     </div>
