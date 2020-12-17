@@ -62,7 +62,7 @@ server {
     }
 }
 
-7、浏览器访问：http://81.69.160.149/  或 https://zenqa.cn
+7、浏览器访问：https://zenqa.cn
 ```
 
 
