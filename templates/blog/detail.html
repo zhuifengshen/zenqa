@@ -21,10 +21,9 @@
   <section class="comment-area" id="comment-area">
       <hr>
       <h3>发表评论</h3>
-      {% show_comment_form post %}
+      {% comment %} {% show_comment_form post %} {% endcomment %}
       <div class="comment-list-panel">
-      {% show_comments post %}
-      </div>
+      {% comment %} {% show_comments post %} {% endcomment %} </div>
   </section>
 {% endblock main %}
 
