@@ -18,13 +18,14 @@
         {{ post.body_html | safe }}
       </div>
   </article>
-  <section class="comment-area" id="comment-area">
+  {% comment %} <section class="comment-area" id="comment-area">
       <hr>
       <h3>发表评论</h3>
-      {% comment %} {% show_comment_form post %} {% endcomment %}
+      {% show_comment_form post %}
       <div class="comment-list-panel">
-      {% comment %} {% show_comments post %} {% endcomment %} </div>
-  </section>
+      {% show_comments post %} 
+      </div>
+  </section> {% endcomment %}
 {% endblock main %}
 
 {% block toc %}
