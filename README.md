@@ -40,25 +40,43 @@ $ pipenv install
 3、生成数据库文件
 $ pipenv run python manage.py migrate
 
-4、创建后台管理员账户
+4、生成静态文件
+$ pipenv run python manage.py collectstatic
+
+5、创建后台管理员账户
 $ pipenv run python manage.py createsuperuser
 
-5、运行项目
-$ pipenv run supervisord -c scripts/supervisord.conf
+6、运行项目
+sudo vim /etc/systemd/system/zenqa.service
 
-6、配置Nginx
+[Unit]
+Description=zenqa web gunicorn daemon
+After=network.target
+[Service]
+User=zion
+Group=zion
+WorkingDirectory=/home/zion/zenqa
+ExecStart=/home/zion/.local/share/virtualenvs/zenqa-pPXffCct/bin/gunicorn --access-logfile - --workers 2 --timeout 3600 --bind 0.0.0.0:7788 zenofqa.wsgi:application
+[Install]
+WantedBy=multi-user.target
+
+sudo systemctl enable zenqa.service
+sudo systemctl start/stop/status zenqa.service
+sudo systemctl reload
+
+7、配置Nginx
 server {
     charset utf-8;
     listen 80;
     server_name zenqa.cn;
 
     location /static {
-        alias /home/devin/apps/zenqa/static;
+        alias /home/zion/zenqa/static;
     }
 
     location / {
         proxy_set_header Host $host;
-        proxy_pass http://127.0.0.1:8000;
+        proxy_pass http://127.0.0.1:7788;
     }
 }
 
